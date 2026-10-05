@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yzk.mapper.AdminMapper">
+    <resultMap id="pageMap" type="com.yzk.model.acl.Admin"  autoMapping="true"/>
+    <select id="pageList" resultMap="pageMap">
+        select id,username,name,phone,ware_id,create_time,update_time,is_deleted
+        from admin
+        <where>
+            is_deleted = 0
+            <if test="vo.username!=null and vo.username !=''">
+                and username like concat('%',#{vo.username},'%')
+            </if>
+            <if test="vo.name!=null and vo.name !=''">
+                and name like concat('%',#{vo.name},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>
