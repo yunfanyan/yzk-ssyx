@@ -2,10 +2,10 @@ package com.yzk.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yzk.client.ProductFeignClient;
 import com.yzk.enums.ActivityType;
 import com.yzk.mapper.ActivityInfoMapper;
 import com.yzk.mapper.ActivityRuleMapper;
@@ -18,8 +18,7 @@ import com.yzk.service.ActivityInfoService;
 import com.yzk.vo.activity.ActivityRuleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
+import org.springframework.util.CollectionUtils;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +36,24 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
     private ActivityRuleMapper activityRuleMapper;
     @Autowired
     private ActivitySkuMapper activitySkuMapper;
+    @Autowired
+    private ProductFeignClient productFeignClient;
+    @Autowired
+    private ActivityInfoMapper activityInfoMapper;
+
+    /**
+     * 根据ID删除活动
+     * @param id
+     */
+    @Override
+    public void removeActivity(Long id) {
+        //删除活动sku
+        activitySkuMapper.delete(new LambdaQueryWrapper<ActivitySku>().eq(ActivitySku::getActivityId, id));
+        //删除活动规则
+        activityRuleMapper.delete(new LambdaQueryWrapper<ActivityRule>().eq(ActivityRule::getActivityId,id));
+        //删除活动
+        baseMapper.deleteById(id);
+    }
 
     /**
      * 条件查询
@@ -48,7 +65,7 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
         IPage<ActivityInfo> activityInfoList = baseMapper.selectPage(pageParam, null);
         List<ActivityInfo> records = activityInfoList.getRecords();
         records.stream().forEach(item->{
-            item.setActivityTypeString(ActivityType.getCommentByCode(item.getActivityType()));
+            item.setActivityTypeString(item.getActivityType().getComment());
         });
         return activityInfoList;
     }
@@ -59,6 +76,10 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
      */
     @Override
     public void saveActivityRule(ActivityRuleVo activityRuleVo) {
+        ActivityInfo activityInfo = baseMapper.selectById(activityRuleVo.getActivityId());
+        if(activityInfo==null){
+            return;
+        }
         //1.删除之前的活动
         activityRuleMapper.delete(new LambdaQueryWrapper<ActivityRule>().eq(ActivityRule::getActivityId,activityRuleVo.getActivityId()));
         //2.新增活动
@@ -69,8 +90,11 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
         activitySkuMapper.delete(new LambdaQueryWrapper<ActivitySku>().eq(ActivitySku::getActivityId, activityRuleVo.getActivityId()));
         //4.新增活动sku
         for(ActivitySku activitySku:activityRuleVo.getActivitySkuList()){
+            activitySku.setActivityId(activityInfo.getId());
             activitySkuMapper.insert(activitySku);
         }
+
+
     }
 
     /**
@@ -80,7 +104,22 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
      */
     @Override
     public Map<String, Object> findActivityRuleList(Long id) {
-        return Collections.emptyMap();
+        //1.通过id查询规则信息列表
+        List<ActivityRule> activityRules = activityRuleMapper.selectList(new LambdaQueryWrapper<ActivityRule>().eq(ActivityRule::getActivityId, id));
+        Map<String,Object> map = new HashMap();
+        map.put("activityRuleList",activityRules);
+        //2.获取商品sku列表
+        //获取sku id
+        List<ActivitySku> activitySkus = activitySkuMapper.selectList(new LambdaQueryWrapper<ActivitySku>().eq(ActivitySku::getActivityId, id));
+        List<Long> skuIds = activitySkus.stream().map(ActivitySku::getSkuId).collect(Collectors.toList());
+        List<SkuInfo> skuInfoList = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(skuIds)){
+            skuInfoList = productFeignClient.findSkuInfoList(skuIds);
+        }
+
+        map.put("skuInfoList",skuInfoList);
+
+        return map;
     }
 
     /**
@@ -90,6 +129,24 @@ public class ActivityInfoServiceImpl extends ServiceImpl<ActivityInfoMapper, Act
      */
     @Override
     public List<SkuInfo> findSkuInfoByKeyword(String keyword) {
-        return Collections.emptyList();
+        //1.查询符合条件的sku
+        List<SkuInfo> skuInfoList = productFeignClient.findSkuInfoByKeyword(keyword);
+        if(skuInfoList==null){
+            return skuInfoList;
+        }
+
+        //2.查询还在活动中的sku-id
+        List<Long> skuIds = skuInfoList.stream().map(SkuInfo::getId).collect(Collectors.toList());
+        List<Long> skuList =  activityInfoMapper.findActivityIdIsExist(skuIds);
+        //3，查询不再活动中的sku
+        ArrayList<SkuInfo> findSkuList = new ArrayList<>();
+
+        for(SkuInfo skuInfo:skuInfoList){
+            if(!skuList.contains(skuInfo.getId())){
+                findSkuList.add(skuInfo);
+            }
+
+        }
+        return findSkuList;
     }
 }

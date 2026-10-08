@@ -8,6 +8,8 @@ import com.yzk.model.product.SkuInfo;
 import com.yzk.vo.product.SkuInfoQueryVo;
 import com.yzk.vo.product.SkuInfoVo;
 
+import java.util.List;
+
 
 /**
  * <p>
@@ -66,4 +68,18 @@ public interface SkuInfoService extends IService<SkuInfo> {
      * @param status
      */
     void isNewPerson(Long skuId, Integer status);
+
+    /**
+     * 批量获取sku信息
+     * @param skuIdList
+     * @return
+     */
+    List<SkuInfo> findSkuInfoList(List<Long> skuIdList);
+
+    /**
+     * 根据关键字或者sku信息
+     * @param keyword
+     * @return
+     */
+    List<SkuInfo> findSkuInfoByKeyword(String keyword);
 }

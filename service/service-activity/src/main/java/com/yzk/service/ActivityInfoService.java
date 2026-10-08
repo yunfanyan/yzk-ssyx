@@ -21,7 +21,11 @@ import java.util.Map;
  * @since 2023-04-07
  */
 public interface ActivityInfoService extends IService<ActivityInfo> {
-
+    /**
+     * 删除活动
+     * @param id
+     */
+    void removeActivity(Long id);
     /**
      * 分页查询
      * @param pageParam 分页条件
@@ -48,4 +52,6 @@ public interface ActivityInfoService extends IService<ActivityInfo> {
      * @return
      */
     List<SkuInfo> findSkuInfoByKeyword(String keyword);
+
+
 }

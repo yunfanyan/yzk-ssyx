@@ -22,5 +22,10 @@ import java.util.List;
 @Repository
 public interface ActivityInfoMapper extends BaseMapper<ActivityInfo> {
 
-
+    /**
+     * 查询正在活动中的skuId
+     * @param skuIds
+     * @return
+     */
+    List<Long> findActivityIdIsExist(@Param("skuIds")List<Long> skuIds);
 }

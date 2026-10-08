@@ -7,11 +7,11 @@ import com.yzk.model.product.SkuInfo;
 import com.yzk.service.CategoryService;
 import com.yzk.service.SkuInfoService;
 import com.yzk.vo.product.SkuInfoVo;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/product")
@@ -41,6 +41,18 @@ public class ProductInnerController {
     @GetMapping("inner/getCategory/{categoryId}")
     public Category getCategory(@PathVariable("categoryId") Long categoryId){
         return categoryService.getById(categoryId);
+    }
+
+    //@ApiOperation(value = "批量获取sku信息")
+    @PostMapping("inner/findSkuInfoList")
+    public List<SkuInfo> findSkuInfoList(@RequestBody List<Long> skuIdList) {
+        return skuInfoService.findSkuInfoList(skuIdList);
+    }
+
+    //@ApiOperation(value = "根据关键字获取sku列表")
+    @GetMapping("inner/findSkuInfoByKeyword/{keyword}")
+    public List<SkuInfo> findSkuInfoByKeyword(@PathVariable("keyword") String keyword) {
+        return skuInfoService.findSkuInfoByKeyword(keyword);
     }
 
 

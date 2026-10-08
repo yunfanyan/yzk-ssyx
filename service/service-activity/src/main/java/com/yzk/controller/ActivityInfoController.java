@@ -43,6 +43,18 @@ public class ActivityInfoController {
         activityInfoService.save(activityInfo);
         return Result.ok(null);
     }
+    @ApiOperation("活动删除")
+    @GetMapping("remove/{id}")
+    public Result remove(@PathVariable Long id){
+        activityInfoService.removeActivity(id);
+        return Result.ok(null);
+    }
+    @ApiOperation("活动修改")
+    @PutMapping("update")
+    public Result updateById(@RequestBody ActivityInfo activityInfo){
+        activityInfoService.updateById(activityInfo);
+        return Result.ok(null);
+    }
     @ApiOperation("分页查询")
     @GetMapping("{page}/{limit}")
     public Result list(@PathVariable Long page,
@@ -57,7 +69,7 @@ public class ActivityInfoController {
     @GetMapping("get/{id}")
     public Result get(@PathVariable Long id) {
         ActivityInfo activityInfo = activityInfoService.getById(id);
-        activityInfo.setActivityTypeString(ActivityType.getCommentByCode(activityInfo.getActivityType()));
+        activityInfo.setActivityTypeString(activityInfo.getActivityType().getComment());
         return Result.ok(activityInfo);
     }
     @ApiOperation("活动规则新增")

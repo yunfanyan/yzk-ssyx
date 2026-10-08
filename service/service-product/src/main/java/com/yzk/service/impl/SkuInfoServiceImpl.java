@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -210,5 +211,25 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
         skuInfoUp.setId(skuId);
         skuInfoUp.setIsNewPerson(status);
         baseMapper.updateById(skuInfoUp);
+    }
+
+    /**
+     * 批量获取sku信息
+     * @param skuIdList
+     * @return
+     */
+    @Override
+    public List<SkuInfo> findSkuInfoList(List<Long> skuIdList) {
+        return baseMapper.selectBatchIds(skuIdList);
+    }
+
+    /**
+     * 关键字获取sku 信息
+     * @param keyword
+     * @retur
+     */
+    @Override
+    public List<SkuInfo> findSkuInfoByKeyword(String keyword) {
+        return baseMapper.selectList(new LambdaQueryWrapper<SkuInfo>().like(SkuInfo::getSkuName,keyword));
     }
 }

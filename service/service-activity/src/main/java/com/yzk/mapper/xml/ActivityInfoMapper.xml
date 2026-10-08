@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yzk.mapper.ActivityInfoMapper">
 
-
+    <select id="findActivityIdIsExist" resultType="Long">
+        select sku.sku_id from activity_info info
+        left join activity_sku sku
+        on info.id = sku.activity_id
+        <where>
+            <if test="skuIds != null and skuIds !=''">
+                and sku.sku_id in
+                          <foreach collection="skuIds" item="item" open="(" separator="," close=")">
+                              #{item}
+                          </foreach>
+            </if>
+        </where>
+    </select>
 
 </mapper>
