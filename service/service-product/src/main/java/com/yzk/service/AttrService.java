@@ -16,5 +16,10 @@ import java.util.List;
  */
 public interface AttrService extends IService<Attr> {
 
-
+    /**
+     * 根据分组id查询商品属性列表
+     * @param groupId
+     * @return
+     */
+    List<Attr> getAttrListByGroupId(Long groupId);
 }

@@ -1,13 +1,17 @@
 package com.yzk;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /**
- * Hello world!
+ * 活动模块启动类
  *
  */
-public class App 
+@SpringBootApplication
+public class ServiceActivityApplication
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        SpringApplication.run(ServiceActivityApplication.class,args);
     }
 }

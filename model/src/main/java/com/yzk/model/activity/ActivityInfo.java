@@ -32,7 +32,7 @@ public class ActivityInfo extends BaseEntity {
 
 	@ApiModelProperty(value = "活动类型（满减、折扣）")
 	@TableField("activity_type")
-	private ActivityType activityType;
+	private Integer activityType;
 
 	@ApiModelProperty(value = "活动描述")
 	@TableField("activity_desc")
