@@ -1,23 +1,21 @@
 package com.yzk.common.config;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
-
- import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
- import org.springframework.context.annotation.Bean;
- import org.springframework.context.annotation.Configuration;
- import springfox.documentation.builders.ApiInfoBuilder;
- import springfox.documentation.builders.ParameterBuilder;
- import springfox.documentation.builders.PathSelectors;
- import springfox.documentation.builders.RequestHandlerSelectors;
- import springfox.documentation.schema.ModelRef;
- import springfox.documentation.service.ApiInfo;
- import springfox.documentation.service.Contact;
- import springfox.documentation.service.Parameter;
- import springfox.documentation.spi.DocumentationType;
- import springfox.documentation.spring.web.plugins.Docket;
- import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
- import java.util.ArrayList;
- import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Swagger2配置信息
@@ -25,6 +23,7 @@ package com.yzk.common.config;
 @Configuration
 @EnableSwagger2WebMvc
 public class Swagger2Config {
+
     //1
     @Bean
     public Docket webApiConfig(){
@@ -75,7 +74,7 @@ public class Swagger2Config {
                 .select()
                 //只显示admin路径下的页面
                 .apis(RequestHandlerSelectors.basePackage("com.yzk"))
-                //.paths(PathSelectors.regex("/admin/.*"))
+                .paths(PathSelectors.regex("/admin/.*"))
                 .build()
                 .globalOperationParameters(pars);
         return adminApi;

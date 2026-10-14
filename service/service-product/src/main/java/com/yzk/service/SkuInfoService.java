@@ -4,6 +4,7 @@ package com.yzk.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yzk.enums.SkuType;
 import com.yzk.model.product.SkuInfo;
 import com.yzk.vo.product.SkuInfoQueryVo;
 import com.yzk.vo.product.SkuInfoVo;
@@ -82,4 +83,17 @@ public interface SkuInfoService extends IService<SkuInfo> {
      * @return
      */
     List<SkuInfo> findSkuInfoByKeyword(String keyword);
+
+    /**
+     * 批量修改sku状态
+     * @param skuIdList id集合
+     * @param skuType sku 状态
+     */
+    void updateSkutypes(List<Long> skuIdList, SkuType skuType);
+
+    /**
+     * 获取所有的新人专享商品
+     * @return
+     */
+    List<SkuInfo> findNewPersonSkuInfoList();
 }

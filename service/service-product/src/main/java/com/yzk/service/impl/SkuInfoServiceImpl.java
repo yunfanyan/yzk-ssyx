@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yzk.constant.MqConst;
+import com.yzk.enums.SkuType;
 import com.yzk.mapper.SkuInfoMapper;
 import com.yzk.model.product.SkuAttrValue;
 import com.yzk.model.product.SkuImage;
@@ -231,5 +232,32 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
     @Override
     public List<SkuInfo> findSkuInfoByKeyword(String keyword) {
         return baseMapper.selectList(new LambdaQueryWrapper<SkuInfo>().like(SkuInfo::getSkuName,keyword));
+    }
+
+    /**
+     * 批量修改sku状态
+     * @param skuIdList id集合
+     * @param skuType sku 状态
+     */
+    @Override
+    public void updateSkutypes(List<Long> skuIdList, SkuType skuType) {
+        for(Long skuId:skuIdList){
+            SkuInfo skuInfo = new SkuInfo();
+            skuInfo.setId(skuId);
+            skuInfo.setSkuType(skuType.getCode());
+            baseMapper.updateById(skuInfo);
+        }
+
+    }
+
+    /**
+     * 获取所有的新人专享商品
+     * @return
+     */
+    @Override
+    public List<SkuInfo> findNewPersonSkuInfoList() {
+        return baseMapper.selectList(new LambdaQueryWrapper<SkuInfo>()
+                .eq(SkuInfo::getIsNewPerson,1));
+
     }
 }

@@ -55,4 +55,25 @@ public class SkuApiController {
         skuService.lowerSku(skuId);
         return Result.ok(null);
     }
+    @ApiOperation("搜索热门商品")
+    @GetMapping("inner/findHotSkuList")
+    public List<SkuEs> findHotSkuList(){
+       return skuService.findHotSkuList();
+    }
+
+    @ApiOperation(value = "搜索商品")
+    @GetMapping("{page}/{limit}")
+    public Result list(
+            @ApiParam(name = "page", value = "当前页码", required = true)
+            @PathVariable Integer page,
+            @ApiParam(name = "limit", value = "每页记录数", required = true)
+            @PathVariable Integer limit,
+            @ApiParam(name = "searchParamVo", value = "查询对象", required = false)
+            SkuEsQueryVo searchParamVo) {
+
+        Pageable pageable = PageRequest.of(page-1, limit);
+        Page<SkuEs> pageModel =  skuService.search(pageable, searchParamVo);
+        return Result.ok(pageModel);
+    }
+
 }

@@ -53,5 +53,10 @@ public interface ActivityInfoService extends IService<ActivityInfo> {
      */
     List<SkuInfo> findSkuInfoByKeyword(String keyword);
 
-
+    /**
+     * 获取商品促销活动信息
+     * @param skuIdList
+     * @return
+     */
+    Map<Long, List<String>> findActivity(List<Long> skuIdList);
 }

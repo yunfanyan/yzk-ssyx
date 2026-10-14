@@ -3,6 +3,7 @@ package com.yzk.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yzk.model.activity.ActivityInfo;
+import com.yzk.model.activity.ActivityRule;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -28,4 +29,11 @@ public interface ActivityInfoMapper extends BaseMapper<ActivityInfo> {
      * @return
      */
     List<Long> findActivityIdIsExist(@Param("skuIds")List<Long> skuIds);
+
+    /**
+     * 根据ID获取商品规则列表
+     * @param skuId
+     * @return
+     */
+    List<ActivityRule> findActivityRule(@Param("skuId") Long skuId);
 }

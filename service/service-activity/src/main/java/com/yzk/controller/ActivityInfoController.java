@@ -29,7 +29,7 @@ import java.util.Map;
 @Api(tags="活动表信息管理")
 @RestController
 @RequestMapping("/admin/activity/activityInfo")
-@CrossOrigin
+//@CrossOrigin
 public class ActivityInfoController {
 
     @Autowired
