@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.yzk.controller;
 
 
@@ -20,7 +21,7 @@ import java.util.Map;
 public class ItemApiController {
     @Autowired
     private ItemService itemService;
-    @ApiOperation("")
+    @ApiOperation("商品详情")
     @GetMapping("item/{id}")
     public Result index(@PathVariable Long id) {
         Long userId = AuthContextHolder.getUserId();
@@ -28,3 +29,5 @@ public class ItemApiController {
         return Result.ok(map);
     }
 }
+=======
+>>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)

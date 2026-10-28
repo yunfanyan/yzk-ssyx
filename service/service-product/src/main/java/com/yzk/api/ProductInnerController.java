@@ -2,7 +2,6 @@ package com.yzk.api;
 
 
 
-import com.yzk.enums.SkuType;
 import com.yzk.model.product.Category;
 import com.yzk.model.product.SkuInfo;
 import com.yzk.service.CategoryService;
@@ -24,33 +23,6 @@ public class ProductInnerController {
 
 
     /**
-     * 获取新人专享商品
-     * @return
-     */
-    @GetMapping("inner/findNewPersonSkuInfoList")
-    public List<SkuInfo> findNewPersonSkuInfoList(){
-       return skuInfoService.findNewPersonSkuInfoList();
-    }
-
-    /**
-     * 获取所有的商品分类
-     * @return
-     */
-    @GetMapping("inner/findAllCategoryList")
-    public List<Category> findAllCategoryList(){
-        return categoryService.getBaseMapper().selectList(null);
-    }
-
-    /**
-     * 修改sku状态
-     * @param skuIdList
-     * @param skuType
-     */
-    @PutMapping("inner/updateSkuType/{skuIdList}/{skuType}")
-    public void updateSkuType(@PathVariable List<Long> skuIdList, @PathVariable SkuType skuType){
-        skuInfoService.updateSkutypes( skuIdList,  skuType);
-    }
-    /**
      *根据skuId获取sku信息
      * @param skuId
      * @return
@@ -66,16 +38,9 @@ public class ProductInnerController {
      * @param categoryId
      * @return
      */
-    //根据分类id获取分类信息
     @GetMapping("inner/getCategory/{categoryId}")
-    public Category  getCategory(@PathVariable Long categoryId) {
-        Category category = categoryService.getById(categoryId);
-        return category;
-    }
-    //根据分类id获取分类列表
-    @PostMapping("inner/findCategoryList")
-    public List<Category> findCategoryList(@RequestBody List<Long> categoryIdList) {
-        return categoryService.listByIds(categoryIdList);
+    public Category getCategory(@PathVariable("categoryId") Long categoryId){
+        return categoryService.getById(categoryId);
     }
 
     //@ApiOperation(value = "批量获取sku信息")
@@ -88,6 +53,10 @@ public class ProductInnerController {
     @GetMapping("inner/findSkuInfoByKeyword/{keyword}")
     public List<SkuInfo> findSkuInfoByKeyword(@PathVariable("keyword") String keyword) {
         return skuInfoService.findSkuInfoByKeyword(keyword);
+    }
+    @GetMapping("inner/getSkuInfoVo/{skuId}")
+    public SkuInfoVo findSkuInfoBySku(@PathVariable("skuId") Long skuId){
+        return skuInfoService.findSkuInfoVoBySkuId(skuId);
     }
 
 

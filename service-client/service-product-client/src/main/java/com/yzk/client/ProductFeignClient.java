@@ -1,12 +1,14 @@
 package com.yzk.client;
 
-import com.yzk.enums.SkuType;
 import com.yzk.model.product.Category;
 import com.yzk.model.product.SkuInfo;
 import com.yzk.vo.product.SkuInfoVo;
 import com.yzk.vo.product.SkuStockLockVo;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -19,19 +21,9 @@ import java.util.List;
  */
 @FeignClient(value = "service-product")
 public interface ProductFeignClient {
-    //获取新人专享商品
-    @GetMapping("/api/product/inner/findNewPersonSkuInfoList")
-    public List<SkuInfo> findNewPersonSkuInfoList();
-
-    //所有分类
-    @GetMapping("/api/product/inner/findAllCategoryList")
-    public List<Category> findAllCategoryList();
 
     @GetMapping("/api/product/inner/getCategory/{categoryId}")
     public Category getCategory(@PathVariable("categoryId") Long categoryId);
-    //根据分类id获取分类列表
-    @PostMapping("/api/product/inner/findCategoryList")
-    public List<Category> findCategoryList(@RequestBody List<Long> categoryIdList);
 
     @GetMapping("/api/product/inner/getSkuInfo/{skuId}")
     public SkuInfo getSkuInfo(@PathVariable Long skuId);
@@ -42,7 +34,13 @@ public interface ProductFeignClient {
     //@ApiOperation(value = "根据关键字获取sku列表")
     @GetMapping("/api/product/inner/findSkuInfoByKeyword/{keyword}")
     public List<SkuInfo> findSkuInfoByKeyword(@PathVariable("keyword") String keyword);
+<<<<<<< HEAD
     //修改sku状态
     @PutMapping("/api/product/inner/updateSkuType/{skuIdList}/{skuType}")
     public void updateSkuType(@PathVariable List<Long> skuIdList, @PathVariable SkuType skuType);
+    //根据skuId 获取skuInfoVo
+    @GetMapping("/api/product/inner/getSkuInfoVo/{skuId}")
+    SkuInfoVo findSkuInfoBySku(@PathVariable("skuId") Long skuId);
+=======
+>>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)
 }

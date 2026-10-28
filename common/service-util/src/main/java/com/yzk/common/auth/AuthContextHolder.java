@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.yzk.common.auth;
 
 
@@ -35,6 +36,11 @@ public class AuthContextHolder {
     public static UserLoginVo getUserLoginVo() {
         return userLoginVo.get();
     }
+    public static void remove() {
+        userId.remove();
+        wareId.remove();
+        userLoginVo.remove();
+    }
 
     public static void setUserLoginVo(UserLoginVo _userLoginVo) {
         userLoginVo.set(_userLoginVo);
@@ -42,3 +48,5 @@ public class AuthContextHolder {
 
 
 }
+=======
+>>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)

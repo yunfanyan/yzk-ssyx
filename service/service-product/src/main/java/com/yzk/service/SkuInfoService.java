@@ -4,7 +4,6 @@ package com.yzk.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yzk.enums.SkuType;
 import com.yzk.model.product.SkuInfo;
 import com.yzk.vo.product.SkuInfoQueryVo;
 import com.yzk.vo.product.SkuInfoVo;
@@ -83,6 +82,7 @@ public interface SkuInfoService extends IService<SkuInfo> {
      * @return
      */
     List<SkuInfo> findSkuInfoByKeyword(String keyword);
+<<<<<<< HEAD
 
     /**
      * 批量修改sku状态
@@ -96,4 +96,14 @@ public interface SkuInfoService extends IService<SkuInfo> {
      * @return
      */
     List<SkuInfo> findNewPersonSkuInfoList();
+
+    /**
+     * 根据skuId获取skuInfoVo
+     * @param skuId
+     * @return
+     */
+    SkuInfoVo findSkuInfoVoBySkuId(Long skuId);
+
+=======
+>>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)
 }

@@ -1,8 +1,10 @@
+<<<<<<< HEAD
 package com.yzk.client;
 
 import com.yzk.model.search.SkuEs;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -20,4 +22,11 @@ public interface SkuFeignClient {
      */
     @GetMapping("/api/search/sku/inner/findHotSkuList")
     public List<SkuEs> findHotSkuList();
+
+    //更新商品热度
+    @GetMapping("/api/search/sku/inner/incrHotScore/{skuId}")
+    public Boolean incrHotScore(@PathVariable("skuId") Long skuId);
+
 }
+=======
+>>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)

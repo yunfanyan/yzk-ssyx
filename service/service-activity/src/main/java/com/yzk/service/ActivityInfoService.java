@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yzk.model.activity.ActivityInfo;
+import com.yzk.model.order.CartInfo;
 import com.yzk.model.product.SkuInfo;
 import com.yzk.vo.activity.ActivityRuleVo;
+import com.yzk.vo.order.OrderConfirmVo;
 
 import java.util.List;
 import java.util.Map;
@@ -53,10 +55,30 @@ public interface ActivityInfoService extends IService<ActivityInfo> {
      */
     List<SkuInfo> findSkuInfoByKeyword(String keyword);
 
+<<<<<<< HEAD
     /**
      * 获取商品促销活动信息
      * @param skuIdList
      * @return
      */
     Map<Long, List<String>> findActivity(List<Long> skuIdList);
+
+    /**
+     *  获取优惠劵和活动信息
+     * @param skuId
+     * @param userId
+     * @return
+     */
+    Map<String, Object> findActivityAndCoupon(Long skuId, Long userId);
+
+    /**
+     * 获取购物车满足条件和优惠劵信息
+     * @param cartInfoList 购物车列表
+     * @param userId 用户ID
+     * @return
+     */
+    OrderConfirmVo finnCartActivityAndCoupon(List<CartInfo> cartInfoList, Long userId);
+=======
+
+>>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)
 }
