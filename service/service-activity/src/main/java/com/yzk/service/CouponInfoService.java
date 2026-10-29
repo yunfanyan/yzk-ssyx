@@ -9,7 +9,6 @@ import com.yzk.vo.activity.CouponRuleVo;
 
 import java.util.Map;
 
-
 /**
  * <p>
  * 优惠券信息 服务类
