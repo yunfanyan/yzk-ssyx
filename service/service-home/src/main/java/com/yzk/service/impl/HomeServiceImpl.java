@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.yzk.service.impl;
 
 
@@ -38,7 +37,7 @@ public class HomeServiceImpl implements HomeService {
      */
     @Override
     public Map<String, Object> homeData(Long userId) {
-
+        userId=29l;
         Map<String,Object> result = new HashMap<>();
         //1 根据userId获取当前登录用户提货地址信息
         // 远程调用service-user模块接口获取需要数据
@@ -77,5 +76,3 @@ public class HomeServiceImpl implements HomeService {
         return result;
     }
 }
-=======
->>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)

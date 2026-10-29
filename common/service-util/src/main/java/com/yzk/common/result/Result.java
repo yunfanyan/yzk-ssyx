@@ -2,17 +2,10 @@ package com.yzk.common.result;
 
 import lombok.Data;
 
-/**
- * @description: 统一返回结果信息类
- * @date: 2026-10-02 11:25
- * @version: 1.0
- * @email: yzk@qq.com
- */
-
 @Data
 public class Result<T> {
 
-//状态码
+    //状态码
     private Integer code;
     //信息
     private String message;

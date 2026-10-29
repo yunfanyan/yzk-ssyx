@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yzk.mapper.SeckillSkuMapper">
+    <select id="selectSeckillSku" resultType="com.yzk.model.activity.SeckillSku">
+        select id,seckill_id,seckill_time_id,sku_id,sku_name,img_url,seckill_price,seckill_stock,seckill_limit,seckill_sale,seckill_sort,create_time,update_time,is_deleted
+        from seckill_sku
+        <where>
+            is_deleted=0
+            <if test="vo.getSeckillId()!=null">
+                and seckill_id = #{vo.seckillId}
+            </if>
+            <if test="vo.getSeckillTimeId()!=null">
+                and seckill_time_id = #{vo.seckillTimeId}
+            </if>
+        </where>
+    </select>
+</mapper>

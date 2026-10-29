@@ -2,17 +2,12 @@ package com.yzk.service;
 
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yzk.model.activity.CouponInfo;
-<<<<<<< HEAD
-import com.yzk.model.order.CartInfo;
 import com.yzk.vo.activity.CouponRuleVo;
 
-import java.util.List;
 import java.util.Map;
-=======
-
->>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)
 
 
 /**
@@ -24,20 +19,39 @@ import java.util.Map;
  * @since 2023-04-07
  */
 public interface CouponInfoService extends IService<CouponInfo> {
+    /**
+     * 删除优惠劵信息
+     * @param couponInfoId
+     */
+    void removeCouponById(Long couponInfoId);
 
     /**
-     * 获取优惠劵列表
-     * @param skuId
-     * @param userId
+     * 根据id查询优惠劵信息
+     * @param id
      * @return
      */
-    List<CouponInfo> findCouponInfo(Long skuId, Long userId);
+    CouponInfo getCouponInfo(Long id);
 
     /**
-     * 获取购物项中使用优惠劵的sku
-     * @param cartInfoList
-     * @param userId
+     * 分页查询优惠劵信息
+     * @param page
+     * @param limit
      * @return
      */
-    List<CouponInfo> findCartCouponInfo(List<CartInfo> cartInfoList, Long userId);
+    IPage<CouponInfo> selectPageCouponInfo(Long page, Long limit);
+
+    /**
+     * 获取优惠劵规则
+     * @param id
+     * @return
+     */
+    Map<String, Object> findCouponRuleList(Long id);
+
+    /**
+     * 保存优惠劵规则
+     * @param couponRuleVo
+     */
+    void saveCouponRule(CouponRuleVo couponRuleVo);
+
+
 }

@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yzk.mapper.ActivityInfoMapper">
-<<<<<<< HEAD
     <resultMap id="ActivityRuleMap" type="com.yzk.model.activity.ActivityRule" autoMapping="true"></resultMap>
-    <resultMap id="ActivitySkuMap" type="com.yzk.model.activity.ActivitySku" autoMapping="true"></resultMap>
-=======
-
->>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)
     <select id="findActivityIdIsExist" resultType="Long">
         select sku.sku_id from activity_info info
         left join activity_sku sku
@@ -20,7 +15,6 @@
             </if>
         </where>
     </select>
-<<<<<<< HEAD
     <select id="findActivityRule" resultMap="ActivityRuleMap">
         select
             info.activity_type as activityType,
@@ -32,19 +26,6 @@
           and now() between info.start_time and info.end_time
         order by rule.condition_amount desc
     </select>
-    <select id="selectActivityList" resultMap="ActivitySkuMap">
-        select info.id as activityId,sku.sku_id as skuId
-        FROM activity_info info
-                          left join activity_sku sku on info.id = sku.activity_id
-        where info.is_deleted = 0 and now() between start_time and end_time
-        and sku.sku_id in
-        <foreach collection="skuIdList" item="item" open="(" close=")" separator=",">
-            #{item}
-        </foreach>
-    </select>
 
-
-=======
->>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)
 
 </mapper>

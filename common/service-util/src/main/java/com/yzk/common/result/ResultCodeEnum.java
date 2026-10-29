@@ -1,19 +1,16 @@
 package com.yzk.common.result;
 
 import lombok.Getter;
-
-
 /**
- * @description: 统一返回结果枚举
- * @date: 2026-10-02 11:28
- * @version: 1.0
- * @email: yzk@qq.com
+ * 统一返回结果状态信息类
+ *
  */
 @Getter
 public enum ResultCodeEnum {
 
     SUCCESS(200,"成功"),
     FAIL(201, "失败"),
+
     SERVICE_ERROR(2012, "服务异常"),
     DATA_ERROR(204, "数据异常"),
     ILLEGAL_REQUEST(205, "非法请求"),
@@ -38,6 +35,9 @@ public enum ResultCodeEnum {
     SKU_LIMIT_ERROR(230, "购买个数不能大于限购个数"),
     REGION_OPEN(240, "该区域已开通"),
     REGION_NO_OPEN(240, "该区域未开通"),
+    PAYMENT_WAITING(242, "订单支付中"),
+    PAYMENT_SUCCESS(241, "订单支付成功"),
+    PAYMENT_FAIL(243, "订单支付失败"),
     ;
 
     private Integer code;

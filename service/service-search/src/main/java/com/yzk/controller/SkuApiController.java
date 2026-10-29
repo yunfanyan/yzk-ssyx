@@ -55,7 +55,6 @@ public class SkuApiController {
         skuService.lowerSku(skuId);
         return Result.ok(null);
     }
-<<<<<<< HEAD
     @ApiOperation("搜索热门商品")
     @GetMapping("inner/findHotSkuList")
     public List<SkuEs> findHotSkuList(){
@@ -76,12 +75,5 @@ public class SkuApiController {
         Page<SkuEs> pageModel =  skuService.search(pageable, searchParamVo);
         return Result.ok(pageModel);
     }
-    @ApiOperation(value = "更新商品热度")
-    @GetMapping("inner/incrHotScore/{skuId}")
-    public Boolean incrHotScore(@PathVariable("skuId") Long skuId){
-       return skuService.incrHotScore(skuId);
-    }
 
-=======
->>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)
 }

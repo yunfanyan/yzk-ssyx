@@ -29,7 +29,7 @@ import java.util.Map;
 @Api(tags="活动表信息管理")
 @RestController
 @RequestMapping("/admin/activity/activityInfo")
-@CrossOrigin
+//@CrossOrigin
 public class ActivityInfoController {
 
     @Autowired
@@ -44,7 +44,7 @@ public class ActivityInfoController {
         return Result.ok(null);
     }
     @ApiOperation("活动删除")
-    @DeleteMapping("remove/{id}")
+    @GetMapping("remove/{id}")
     public Result remove(@PathVariable Long id){
         activityInfoService.removeActivity(id);
         return Result.ok(null);

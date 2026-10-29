@@ -1,5 +1,13 @@
 package com.yzk.service;
 
+
+import com.yzk.model.search.SkuEs;
+import com.yzk.vo.search.SkuEsQueryVo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+
 /**
  * @description: es-sku业务接口
  * @author: yzk
@@ -19,7 +27,6 @@ public interface SkuService {
      * @param skuId
      */
     void lowerSku(Long skuId);
-<<<<<<< HEAD
 
     /**
      * 获取热销商品列表
@@ -34,13 +41,4 @@ public interface SkuService {
      * @return
      */
     Page<SkuEs> search(Pageable pageable, SkuEsQueryVo searchParamVo);
-
-    /**
-     * 更新商品热度
-     * @param skuId
-     * @return
-     */
-    Boolean incrHotScore(Long skuId);
-=======
->>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)
 }

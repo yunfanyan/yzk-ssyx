@@ -1,7 +1,9 @@
 package com.yzk.service.impl;
 
 
+import com.yzk.client.ActivityFeignClient;
 import com.yzk.client.ProductFeignClient;
+import com.yzk.common.auth.AuthContextHolder;
 import com.yzk.common.exception.SsyxException;
 import com.yzk.enums.SkuType;
 import com.yzk.model.product.Category;
@@ -9,12 +11,11 @@ import com.yzk.model.product.SkuInfo;
 import com.yzk.model.search.SkuEs;
 import com.yzk.repository.SkuRepository;
 import com.yzk.service.SkuService;
+import com.yzk.vo.search.SkuEsQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -22,11 +23,7 @@ import org.springframework.util.StringUtils;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
-=======
-import org.springframework.stereotype.Service;
->>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)
 
 /**
  * @description: es-sku业务实现类
@@ -40,13 +37,8 @@ public class SkuServiceImpl implements SkuService {
     private ProductFeignClient productFeignClient;
     @Autowired
     private SkuRepository skuRepository;
-<<<<<<< HEAD
     @Autowired
     private ActivityFeignClient activityFeignClient;
-    @Autowired
-    private RedisTemplate redisTemplate;
-=======
->>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)
     /**
      * 上架
      * @param skuId
@@ -98,7 +90,6 @@ public class SkuServiceImpl implements SkuService {
         //es中删除
         skuRepository.deleteById(skuId);
     }
-<<<<<<< HEAD
 
     /**
      * 搜索热门商品
@@ -110,24 +101,6 @@ public class SkuServiceImpl implements SkuService {
         Page<SkuEs> pageModel = skuRepository.findByOrderByHotScoreDesc(pageable);
         List<SkuEs> content = pageModel.getContent();
         return content;
-    }
-
-    /**
-     * 更新商品热度
-     * @param skuId
-     * @return
-     */
-    @Override
-    public Boolean incrHotScore(Long skuId) {
-        String key = "hotScore";
-        Double keyScore = redisTemplate.opsForZSet().incrementScore(key, skuId, 1);
-        if(keyScore%10==0){
-            Optional<SkuEs> byId = skuRepository.findById(skuId);
-            SkuEs skuEs = byId.get();
-            skuEs.setHotScore(keyScore.longValue());
-            skuRepository.save(skuEs);
-        }
-        return true;
     }
 
     /**
@@ -149,15 +122,15 @@ public class SkuServiceImpl implements SkuService {
             pageModel =
                     skuRepository
                             .findByCategoryIdAndWareId(
-                                    searchParamVo.getCategoryId(),
-                                    searchParamVo.getWareId(),
+                                     searchParamVo.getCategoryId(),
+                                     1l,
                                     pageable);
         } else {
             ///如果keyword不为空根据仓库id + keyword进行查询
             pageModel = skuRepository
                     .findByKeywordAndWareId(
                              searchParamVo.getKeyword(),
-                            searchParamVo.getWareId(),
+                             1l,
                             pageable);
         }
 
@@ -189,6 +162,4 @@ public class SkuServiceImpl implements SkuService {
         }
         return pageModel;
     }
-=======
->>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)
 }

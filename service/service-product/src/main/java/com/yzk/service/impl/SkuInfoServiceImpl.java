@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yzk.constant.MqConst;
+import com.yzk.enums.SkuType;
 import com.yzk.mapper.SkuInfoMapper;
 import com.yzk.model.product.SkuAttrValue;
 import com.yzk.model.product.SkuImage;
@@ -55,19 +56,19 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
         //2.保存sku海报
         List<SkuPoster> skuPosterList = skuInfoVo.getSkuPosterList();
         for(SkuPoster skuPoster:skuPosterList){
-            skuPoster.setSkuId(skuInfo.getId());
+            skuPoster.setId(skuInfo.getId());
         }
         skuPosterService.saveBatch(skuPosterList);
         //3.保存sku图片
         List<SkuImage> skuImagesList = skuInfoVo.getSkuImagesList();
         for(SkuImage skuImage:skuImagesList){
-            skuImage.setSkuId(skuInfo.getId());
+            skuImage.setId(skuInfo.getId());
         }
         skuImageService.saveBatch(skuImagesList);
         //4.保存sku属性值
         List<SkuAttrValue> skuAttrValueList = skuInfoVo.getSkuAttrValueList();
         for(SkuAttrValue skuAttrValue:skuAttrValueList){
-            skuAttrValue.setSkuId(skuInfo.getId());
+            skuAttrValue.setId(skuInfo.getId());
         }
         skuAttrValueService.saveBatch(skuAttrValueList);
 
@@ -87,30 +88,27 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
         baseMapper.updateById(skuInfo);
         //2.修改sku海报
         if(!CollectionUtils.isEmpty(skuInfoVo.getSkuPosterList())) {
-            skuPosterService.remove(new LambdaQueryWrapper<SkuPoster>().eq(SkuPoster::getSkuId,skuInfo.getId()));
             List<SkuPoster> skuPosterList = skuInfoVo.getSkuPosterList();
             for (SkuPoster skuPoster : skuPosterList) {
-                skuPoster.setSkuId(skuInfo.getId());
+                skuPoster.setId(skuInfo.getId());
             }
-            skuPosterService.saveBatch(skuPosterList);
+            skuPosterService.updateBatchById(skuPosterList);
         }
         //3.修改sku图片
         if(!CollectionUtils.isEmpty(skuInfoVo.getSkuImagesList())) {
             List<SkuImage> skuImagesList = skuInfoVo.getSkuImagesList();
-            skuImageService.remove(new LambdaQueryWrapper<SkuImage>().eq(SkuImage::getSkuId,skuInfo.getId()));
             for (SkuImage skuImage : skuImagesList) {
-                skuImage.setSkuId(skuInfo.getId());
+                skuImage.setId(skuInfo.getId());
             }
-            skuImageService.saveBatch(skuImagesList);
+            skuImageService.updateBatchById(skuImagesList);
         }
         //4.修改sku属性值
         if(!CollectionUtils.isEmpty(skuInfoVo.getSkuAttrValueList())) {
-            skuAttrValueService.remove(new LambdaQueryWrapper<SkuAttrValue>().eq(SkuAttrValue::getSkuId,skuInfo.getId()));
             List<SkuAttrValue> skuAttrValueList = skuInfoVo.getSkuAttrValueList();
             for (SkuAttrValue skuAttrValue : skuAttrValueList) {
-                skuAttrValue.setSkuId(skuInfo.getId());
+                skuAttrValue.setId(skuInfo.getId());
             }
-            skuAttrValueService.saveBatch(skuAttrValueList);
+            skuAttrValueService.updateBatchById(skuAttrValueList);
         }
 
     }
@@ -235,7 +233,6 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
     public List<SkuInfo> findSkuInfoByKeyword(String keyword) {
         return baseMapper.selectList(new LambdaQueryWrapper<SkuInfo>().like(SkuInfo::getSkuName,keyword));
     }
-<<<<<<< HEAD
 
     /**
      * 批量修改sku状态
@@ -263,36 +260,4 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
                 .eq(SkuInfo::getIsNewPerson,1));
 
     }
-
-    /**
-     * 根据skuId获取skuInfoVo
-     *
-     * @param skuId
-     * @return
-     */
-    @Override
-    public SkuInfoVo findSkuInfoVoBySkuId(Long skuId) {
-        SkuInfoVo skuInfoVo = new SkuInfoVo();
-        SkuInfo skuInfo = baseMapper.selectById(skuId);
-        if(StringUtils.isEmpty(skuInfo)){
-            return skuInfoVo;
-        }
-
-        BeanUtils.copyProperties(skuInfo, skuInfoVo);
-
-        //查询sku属性值
-        List<SkuAttrValue> skuAttrValueList = skuAttrValueService.list(new LambdaQueryWrapper<SkuAttrValue>().eq(SkuAttrValue::getSkuId, skuId));
-        skuInfoVo.setSkuAttrValueList(skuAttrValueList);
-
-        //查询sku海报
-        List<SkuPoster> posterList = skuPosterService.list(new LambdaQueryWrapper<SkuPoster>().eq(SkuPoster::getSkuId, skuId));
-        skuInfoVo.setSkuPosterList(posterList);
-
-        //查询sku图片
-        List<SkuImage> skuImageList = skuImageService.list(new LambdaQueryWrapper<SkuImage>().eq(SkuImage::getSkuId, skuId));
-        skuInfoVo.setSkuImagesList(skuImageList);
-        return skuInfoVo;
-    }
-=======
->>>>>>> parent of d1424a5 (微信小程序登录界面，首页，分类查询接口完成)
 }
