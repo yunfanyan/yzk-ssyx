@@ -51,7 +51,7 @@ Thumbs.db
 *.swo
 
 
-# 【测试源码不上传】
-src/test/
-# 环境配置（可选，把本地yml不提交，避免密码上传git）
-src/main/resources/application-dev.yml
+# 【测试源码不上传】匹配任意层级下的 src/test 目录
+**/src/test/
+# 环境配置不上传：匹配任意层级下的 src/main/resources 目录
+**/src/main/resources/
