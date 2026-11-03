@@ -5,8 +5,10 @@ package com.yzk.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yzk.model.activity.CouponInfo;
+import com.yzk.model.order.CartInfo;
 import com.yzk.vo.activity.CouponRuleVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,5 +54,11 @@ public interface CouponInfoService extends IService<CouponInfo> {
      */
     void saveCouponRule(CouponRuleVo couponRuleVo);
 
-
+    /**
+     * 获取购物车中可以使用的优惠劵
+     * @param cartInfoList
+     * @param userId
+     * @return
+     */
+    List<CouponInfo> findCartCouponInfo(List<CartInfo> cartInfoList, Long userId);
 }

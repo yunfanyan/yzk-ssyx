@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yzk.model.activity.ActivityInfo;
+import com.yzk.model.order.CartInfo;
 import com.yzk.model.product.SkuInfo;
 import com.yzk.vo.activity.ActivityRuleVo;
+import com.yzk.vo.order.OrderConfirmVo;
 
 import java.util.List;
 import java.util.Map;
@@ -59,4 +61,12 @@ public interface ActivityInfoService extends IService<ActivityInfo> {
      * @return
      */
     Map<Long, List<String>> findActivity(List<Long> skuIdList);
+
+    /**
+     * 获取满足购物车中的活动和优惠劵信息
+     * @param cartInfoList 购物车信息列表
+     * @param userId 用户信息
+     * @return
+     */
+    OrderConfirmVo findCartActivityAndCoupon(List<CartInfo> cartInfoList, Long userId);
 }
